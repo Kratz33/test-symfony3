@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@FrontBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -49,7 +50,10 @@ doctrine:
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
-        charset:  UTF8
+        charset:  utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
@@ -72,8 +76,8 @@ swiftmailer:
 
 fos_user:
     db_driver:              orm # Required
-    firewall_name:          ~ # Required
-    user_class:             ~ # Required
+    firewall_name:          main # Required
+    user_class:             UserBundle\Entity\User # Required
     use_listener:           true
     use_username_form_type: true
     model_manager_name:     null  # change it to the name of your entity/document manager if you don't want to use the default one.
@@ -95,12 +99,12 @@ fos_user:
     registration:
         confirmation:
             from_email: # Use this node only if you don't want the global email address for the confirmation email
-                address:        ...
-                sender_name:    ...
+                address:        yohannfurgaut@gmail.com
+                sender_name:    Admin
             enabled:    false # change to true for required email confirmation
-            #template:   FOSUserBundle:Registration:email.txt.twig
+            template:   FOSUserBundle:Registration:email.txt.twig
         form:
-            type:               fos_user_registration
+            type:               UserBundle\Form\Type\RegistrationFormType
             #handler:            fos_user.registration.form.handler.default
             name:               fos_user_registration_form
             validation_groups:  [Registration, Default]
@@ -125,7 +129,7 @@ fos_user:
     #template:
         #engine: twig
     group:
-        group_class:    ~ # Required when using groups
+        group_class:    Application\Sonata\UserBundle\Entity\Group # Required when using groups
         group_manager:  fos_user.group_manager.default
         form:
             type:               fos_user_group
