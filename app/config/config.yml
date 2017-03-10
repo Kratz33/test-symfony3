@@ -40,6 +40,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    paths:
+        '%kernel.root_dir%/../src/FrontBundle/templates/': front
 
 # Doctrine Configuration
 doctrine:
@@ -136,3 +138,9 @@ fos_user:
             #handler:            fos_user.group.form.handler.default
             name:               fos_user_group_form
             validation_groups:  [Registration, Default]
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~

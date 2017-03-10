@@ -1,7 +1,11 @@
 front:
     resource: "@FrontBundle/Controller/"
     type:     annotation
+
+homepage:
+    resource: "@FrontBundle/Controller/"
     prefix:   /
+    type:     annotation
 
 user:
     resource: '@UserBundle/Resources/config/routing.yml'
